@@ -18,14 +18,14 @@
   <rect x="2" y="2" width="916" height="236" rx="14" fill="none" stroke="url(#acG)" stroke-width="2" opacity="0.4"/>
   
   <g transform="translate(460,70) scale(1.6)">
-<polygon points="0,-24 20,-12 20,12 0,24 -20,12 -20,-12" fill="none" stroke="url(#acG)" stroke-width="4"/><circle cx="0" cy="0" r="7" fill="#38BDF8"/>
+<rect x="-24" y="-24" width="48" height="48" rx="8" fill="none" stroke="url(#acG)" stroke-width="4"/><circle cx="0" cy="0" r="10" fill="#38BDF8"/>
   </g>
   
   <text x="460" y="152" text-anchor="middle" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-weight="900" font-size="28" fill="#F8FAFC" letter-spacing="2">
     GENETICCHICKENGINEERING-REBORN-DRAKE
   </text>
   <text x="460" y="184" text-anchor="middle" font-family="'Segoe UI', system-ui, -apple-system, sans-serif" font-weight="700" font-size="12" fill="#93C5FD" letter-spacing="3" opacity="0.9">
-    SLIMEFUN4 ADDON · DRAKES EDITION
+    SLIMEFUN4 ADDON · GENETICCHICKENGINEERING-REBORN-DRAKE
   </text>
   
   <g transform="translate(460, 210)">
