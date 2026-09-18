@@ -67,7 +67,9 @@ public class GeneticSequencer extends AbstractMachine {
                 if (config.isPainEnabled() && ChickenUtils.getHealth(learnedChicken) <= 0d) {
                     ItemUtils.consumeItem(chicken, false);
                     if (config.isSoundsEnabled()) {
-                        menu.getBlock().getWorld().playSound(menu.getLocation(), Sound.ENTITY_CHICKEN_DEATH, 1f, 1f);
+                        GeneticChickengineering.getScheduler().run(() ->
+                            menu.getBlock().getWorld().playSound(menu.getLocation(), Sound.ENTITY_CHICKEN_DEATH, 1f, 1f)
+                        );
                     }
                     continue;
                 }

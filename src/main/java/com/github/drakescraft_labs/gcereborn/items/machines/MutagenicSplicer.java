@@ -28,6 +28,12 @@ import com.github.drakescraft_labs.gcereborn.utils.PocketChickenData;
 
 public class MutagenicSplicer extends AbstractMachine {
 
+    private static final int[] BORDER = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 13, 31, 36, 37, 38, 39, 40, 41, 42, 43, 44 };
+    private static final int[] BORDER_IN = { 9, 10, 11, 12, 18, 27, 28, 29, 30 };
+    private static final int[] BORDER_OUT = { 14, 15, 16, 17, 23, 26, 32, 33, 34, 35 };
+    private static final int[] INPUT_SLOTS = { 19, 20, 21 };
+    private static final int[] OUTPUT_SLOTS = { 24, 25 };
+
     public MutagenicSplicer(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
@@ -36,6 +42,38 @@ public class MutagenicSplicer extends AbstractMachine {
     @Nonnull
     public ItemStack getProgressBar() {
         return new ItemStack(Material.ENCHANTING_TABLE);
+    }
+
+    @Override
+    public int[] getInputSlots() {
+        return INPUT_SLOTS;
+    }
+
+    @Override
+    public int[] getOutputSlots() {
+        return OUTPUT_SLOTS;
+    }
+
+    @Override
+    protected void constructMenu(@Nonnull com.github.drakescraft_labs.slimefun4.legacy.api.inventory.BlockMenuPreset preset) {
+        preset.setSize(45);
+        for (int i : BORDER) {
+            preset.addItem(i, com.github.drakescraft_labs.slimefun4.utils.ChestMenuUtils.getBackground(), com.github.drakescraft_labs.slimefun4.utils.ChestMenuUtils.getEmptyClickHandler());
+        }
+
+        for (int i : BORDER_IN) {
+            preset.addItem(i, com.github.drakescraft_labs.slimefun4.utils.ChestMenuUtils.getInputSlotTexture(), com.github.drakescraft_labs.slimefun4.utils.ChestMenuUtils.getEmptyClickHandler());
+        }
+
+        for (int i : BORDER_OUT) {
+            preset.addItem(i, com.github.drakescraft_labs.slimefun4.utils.ChestMenuUtils.getOutputSlotTexture(), com.github.drakescraft_labs.slimefun4.utils.ChestMenuUtils.getEmptyClickHandler());
+        }
+
+        preset.addItem(INFO_SLOT, new com.github.drakescraft_labs.slimefun4.libraries.dough.items.CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, " "), com.github.drakescraft_labs.slimefun4.utils.ChestMenuUtils.getEmptyClickHandler());
+
+        for (int i : getOutputSlots()) {
+            preset.addMenuClickHandler(i, com.github.drakescraft_labs.slimefun4.utils.ChestMenuUtils.getDefaultOutputHandler());
+        }
     }
 
     @Override
@@ -113,7 +151,9 @@ public class MutagenicSplicer extends AbstractMachine {
         menu.consumeItem(catalystSlot, 1);
 
         if (GeneticChickengineering.getConfigService().isSoundsEnabled()) {
-            menu.getBlock().getWorld().playSound(menu.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 0.8f);
+            GeneticChickengineering.getScheduler().run(() ->
+                menu.getBlock().getWorld().playSound(menu.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 0.8f)
+            );
         }
 
         return recipe;

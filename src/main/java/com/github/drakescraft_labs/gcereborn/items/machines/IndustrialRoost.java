@@ -62,10 +62,25 @@ public class IndustrialRoost extends AbstractMachine {
 
     @Override
     protected void constructMenu(@Nonnull BlockMenuPreset preset) {
+        preset.setSize(54);
+
+        java.util.Set<Integer> interactive = new java.util.HashSet<>();
+        for (int s : INPUT_SLOTS) interactive.add(s);
+        interactive.add(CATALYST_SLOT);
+        interactive.add(FEED_SLOT);
+        interactive.add(INFO_SLOT);
+        for (int s : OUTPUT_SLOTS) interactive.add(s);
+
+        for (int i = 0; i < 54; i++) {
+            if (!interactive.contains(i)) {
+                preset.addItem(i, ChestMenuUtils.getBackground(), ChestMenuUtils.getEmptyClickHandler());
+            }
+        }
+
         preset.addItem(INFO_SLOT, GuiItems.BLACK_PANE, ChestMenuUtils.getEmptyClickHandler());
 
         for (int i : getOutputSlots()) {
-            preset.addMenuClickHandler(i, (p, slot, cursor, action) -> cursor != null && !cursor.getType().isAir());
+            preset.addMenuClickHandler(i, ChestMenuUtils.getDefaultOutputHandler());
         }
     }
 

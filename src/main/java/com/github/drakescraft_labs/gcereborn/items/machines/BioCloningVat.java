@@ -56,6 +56,7 @@ public class BioCloningVat extends AbstractMachine {
         ItemStack chickenItem = null;
         ItemStack nutrientGel = null;
         int gelSlot = -1;
+        int chickenSlot = -1;
 
         for (int slot : getInputSlots()) {
             ItemStack item = menu.getItemInSlot(slot);
@@ -65,6 +66,7 @@ public class BioCloningVat extends AbstractMachine {
 
             if (ChickenUtils.isPocketChicken(item) && ChickenUtils.isAdult(item) && chickenItem == null) {
                 chickenItem = item;
+                chickenSlot = slot;
             } else if (item.isSimilar(GCEItems.NUTRIENT_GEL)) {
                 nutrientGel = item;
                 gelSlot = slot;
@@ -109,11 +111,13 @@ public class BioCloningVat extends AbstractMachine {
         }
 
         // Consume 1 parent from input and 1 nutrient gel
-        ItemUtils.consumeItem(chickenItem, 1, false);
+        menu.consumeItem(chickenSlot, 1);
         menu.consumeItem(gelSlot, 1);
 
         if (GeneticChickengineering.getConfigService().isSoundsEnabled()) {
-            menu.getBlock().getWorld().playSound(menu.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1f, 1.2f);
+            GeneticChickengineering.getScheduler().run(() ->
+                menu.getBlock().getWorld().playSound(menu.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1f, 1.2f)
+            );
         }
 
         return recipe;

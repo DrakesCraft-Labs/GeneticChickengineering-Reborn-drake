@@ -126,7 +126,9 @@ public class PrivateCoop extends AbstractMachine {
                 if (ChickenUtils.getHealth(parent) <= 0d) {
                     ItemUtils.consumeItem(parent, false);
                     if (GeneticChickengineering.getConfigService().isSoundsEnabled()) {
-                        menu.getBlock().getWorld().playSound(menu.getLocation(), Sound.ENTITY_CHICKEN_DEATH, 1f, 1f);
+                        GeneticChickengineering.getScheduler().run(() ->
+                            menu.getBlock().getWorld().playSound(menu.getLocation(), Sound.ENTITY_CHICKEN_DEATH, 1f, 1f)
+                        );
                     }
                     return null;
                 }
