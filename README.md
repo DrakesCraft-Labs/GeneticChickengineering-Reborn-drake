@@ -1,3 +1,9 @@
+> [!WARNING]
+> ### ⚠️ ARCHIVADO / CONSOLIDADO EN DRAKES-SUITES
+> Este repositorio ha sido consolidado de forma definitiva en el monorepo oficial:  
+> 👉 [**Drakes-Suites (Suite 2: DrakesBio)**](https://github.com/DrakesCraft-Labs/Drakes-Suites)  
+> Todo el desarrollo activo, optimizaciones del Ticker Engine, compatibilidad con Paper 1.21.11 y preparación para 26.X se realiza exclusivamente allí.
+
 <div align="center">
 
   <img src="https://raw.githubusercontent.com/DrakesCraft-Labs/GeneticChickengineering-Reborn-drake/main/banner.svg" alt="GeneticChickengineering-Reborn-drake Banner" width="920" />
