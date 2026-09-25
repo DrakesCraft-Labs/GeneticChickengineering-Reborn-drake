@@ -133,7 +133,20 @@ public class ExcitationChamber extends AbstractMachine {
                     chickResource = resourceIcon.clone();
                 }
 
-                int speed = Math.max(1, (config.getResourceBaseTime() + data.getResourceTier() - 2 * data.getDNAStrength()) / getSpeed());
+                int rawTime = Math.max(1, config.getResourceBaseTime() + data.getResourceTier() - 2 * data.getDNAStrength());
+                int machineSpeed = getSpeed();
+                int speed = Math.max(1, rawTime / machineSpeed);
+
+                // Quantum Excitation Multiplier:
+                // When machine speed reaches or exceeds 25x (Quantum Excitation Chamber),
+                // the 1-tick engine barrier is reached for optimized chickens. We channel
+                // the excess quantum excitation into multiplied resource yield (2.5x throughput:
+                // 2 items guaranteed + 50% chance for a 3rd item per cycle).
+                if (machineSpeed >= 25 && speed <= 1) {
+                    int quantumYield = 2 + (ThreadLocalRandom.current().nextDouble() < 0.5 ? 1 : 0);
+                    chickResource.setAmount(Math.min(quantumYield, chickResource.getMaxStackSize()));
+                }
+
                 MachineRecipe recipe = new MachineRecipe(
                     config.isTest() ? 1 : speed,
                     new ItemStack[] {chicken},
