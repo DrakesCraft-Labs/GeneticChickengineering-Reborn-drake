@@ -43,8 +43,9 @@ public interface MobAdapter<T extends LivingEntity> extends PersistentDataType<S
         lore.add("");
         lore.add(localization.getString("lores.chicken.health", json.get("_health").getAsDouble()));
 
-        if (!json.get("_customName").isJsonNull()) {
-            lore.add(localization.getString("lores.chicken.name", json.get("_customName").getAsString()));
+        JsonElement customName = json.get("_customName");
+        if (hasCustomName(json)) {
+            lore.add(localization.getString("lores.chicken.name", customName.getAsString()));
         }
 
         int fireTicks = json.get("_fireTicks").getAsInt();
@@ -53,6 +54,11 @@ public interface MobAdapter<T extends LivingEntity> extends PersistentDataType<S
         }
 
         return lore;
+    }
+
+    static boolean hasCustomName(JsonObject json) {
+        JsonElement customName = json.get("_customName");
+        return customName != null && !customName.isJsonNull();
     }
 
     default Class<String> getPrimitiveType() {
