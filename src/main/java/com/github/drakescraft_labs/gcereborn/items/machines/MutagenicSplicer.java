@@ -130,7 +130,7 @@ public class MutagenicSplicer extends AbstractMachine {
         ItemStack mutated = chickenItem.clone();
         mutated.setAmount(1);
         DNA originalDna = data.getDNA();
-        JsonObject json = data.getAdapter() != null ? data.getAdapter().deepCopy() : new JsonObject();
+        JsonObject json = data.getAdapter() != null ? data.getAdapter().deepCopy() : ChickenUtils.getChickenJson(false);
         json.addProperty("baby", false);
         json.addProperty("_health", 4d);
 

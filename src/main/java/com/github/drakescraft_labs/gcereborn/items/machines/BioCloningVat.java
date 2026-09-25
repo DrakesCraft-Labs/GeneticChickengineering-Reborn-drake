@@ -53,7 +53,8 @@ public class BioCloningVat extends AbstractMachine {
     @Override
     @Nullable
     protected MachineRecipe findNextRecipe(@Nonnull BlockMenu menu) {
-        ItemStack chickenItem = null;
+        try {
+            ItemStack chickenItem = null;
         ItemStack nutrientGel = null;
         int gelSlot = -1;
         int chickenSlot = -1;
@@ -89,7 +90,7 @@ public class BioCloningVat extends AbstractMachine {
         // Inherit expanded species if present
         ExpandedChickenSpecies exp = data.getExpandedSpecies();
         if (exp != null) {
-            JsonObject json = new JsonObject();
+            JsonObject json = data.getAdapter() != null ? data.getAdapter().deepCopy() : ChickenUtils.getChickenJson(true);
             json.addProperty("baby", true);
             json.addProperty("_age", -24000);
             json.addProperty("_breedable", false);
@@ -121,5 +122,9 @@ public class BioCloningVat extends AbstractMachine {
         }
 
         return recipe;
+        } catch (Exception ex) {
+            GeneticChickengineering.getInstance().getLogger().warning("Error procesando receta en BioCloningVat: " + ex.getMessage());
+            return null;
+        }
     }
 }

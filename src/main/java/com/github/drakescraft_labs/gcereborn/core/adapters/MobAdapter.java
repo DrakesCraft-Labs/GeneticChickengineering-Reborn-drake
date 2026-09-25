@@ -41,16 +41,20 @@ public interface MobAdapter<T extends LivingEntity> extends PersistentDataType<S
         LocalizationService localization = GeneticChickengineering.getLocalization();
 
         lore.add("");
-        lore.add(localization.getString("lores.chicken.health", json.get("_health").getAsDouble()));
+        double health = (json != null && json.has("_health") && !json.get("_health").isJsonNull())
+            ? json.get("_health").getAsDouble()
+            : 4.0;
+        lore.add(localization.getString("lores.chicken.health", health));
 
-        JsonElement customName = json.get("_customName");
-        if (hasCustomName(json)) {
-            lore.add(localization.getString("lores.chicken.name", customName.getAsString()));
+        if (json != null && hasCustomName(json)) {
+            lore.add(localization.getString("lores.chicken.name", json.get("_customName").getAsString()));
         }
 
-        int fireTicks = json.get("_fireTicks").getAsInt();
-        if (fireTicks > 0) {
-            lore.add(localization.getString("lores.chicken.on-fire"));
+        if (json != null && json.has("_fireTicks") && !json.get("_fireTicks").isJsonNull()) {
+            int fireTicks = json.get("_fireTicks").getAsInt();
+            if (fireTicks > 0) {
+                lore.add(localization.getString("lores.chicken.on-fire"));
+            }
         }
 
         return lore;

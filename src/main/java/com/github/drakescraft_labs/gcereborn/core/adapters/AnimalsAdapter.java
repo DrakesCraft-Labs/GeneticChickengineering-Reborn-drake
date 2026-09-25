@@ -23,7 +23,8 @@ public class AnimalsAdapter<T extends Animals> implements MobAdapter<T> {
     public List<String> getLore(JsonObject json) {
         List<String> lore = MobAdapter.super.getLore(json);
 
-        boolean isBaby = json.get("baby").getAsBoolean();
+        boolean isBaby = json != null && json.has("baby") && !json.get("baby").isJsonNull()
+            && json.get("baby").getAsBoolean();
 
         if (isBaby) {
             lore.add(GeneticChickengineering.getLocalization().getString("lores.chicken.baby"));
